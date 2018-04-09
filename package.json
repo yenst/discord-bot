@@ -1,0 +1,11 @@
+{
+  "name": "aids-bot",
+  "version": "1.0.0",
+  "description": "bbc",
+  "main": "bot.js",
+  "author": "shockyd",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "winston": "^2.4.1"
+  }
+}
