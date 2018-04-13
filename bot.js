@@ -1,6 +1,8 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var xternal = require('./xternal');
+
 
 //global
 var bbc_interval;
@@ -43,10 +45,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
       bbc_cursor++;
     }
 
-    var clearIntervalCustom = function(interval) {
+    var clearIntervalCustom = function (interval)  {
       clearInterval(interval);
     }
-    var startBbcInterval = function() {
+    var startBbcInterval = function ()  {
       bbc_interval = setInterval(nextLetter, 3000);
     }
     switch (cmd) {
@@ -64,6 +66,37 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         clearIntervalCustom(bbc_interval);
         break;
         // Just add any case commands if you want to..
+      case 'affixes':
+        xternal.mPlusAffixes(args[0]).then(affixes => {
+          let message = '';
+          affixes.forEach(affix => {
+            message += affix.name + '\n';
+          });
+          bot.sendMessage({
+            to: channelID,
+            message
+          })
+        });
+        break;
+        case 'm+score':
+        xternal.mPlusScore(args[0],args[1],args[2]).then(scores => {
+          let message = '';
+          console.log(scores);
+          
+          bot.sendMessage({
+            to: channelID,
+            message:args[2]+' - '+args[1]+' M+ score:'+'\nOveral: '+scores.all+'\nDps: '+scores.dps+'\nHealer: '+scores.healer+'\nTank: '+scores.tank
+          })
+        }).catch(err => {
+          if(err){
+            bot.sendMessage({
+              to: channelID,
+              message:'Please use the correct format: -m+score REGION SERVER CHARACTER'
+            })
+          }
+
+        })
+        break;
     }
   }
 

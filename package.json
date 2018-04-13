@@ -5,7 +5,12 @@
   "main": "bot.js",
   "author": "shockyd",
   "dependencies": {
+    "ajax-request": "^1.2.3",
     "discord.io": "^2.5.3",
+    "node-fetch": "^2.1.2",
     "winston": "^2.4.1"
   },
-  "scripts": {"start": "node bot.js"}}
+  "scripts": {
+    "start": "node bot.js"
+  }
+}
