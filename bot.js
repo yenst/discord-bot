@@ -76,22 +76,29 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             to: channelID,
             message
           })
-        });
-        break;
-        case 'm+score':
-        xternal.mPlusScore(args[0],args[1],args[2]).then(scores => {
-          let message = '';
-          console.log(scores);
-          
-          bot.sendMessage({
-            to: channelID,
-            message:args[2]+' - '+args[1]+' M+ score:'+'\nOveral: '+scores.all+'\nDps: '+scores.dps+'\nHealer: '+scores.healer+'\nTank: '+scores.tank
-          })
         }).catch(err => {
-          if(err){
+          if (err) {
             bot.sendMessage({
               to: channelID,
-              message:'Please use the correct format: -m+score REGION SERVER CHARACTER'
+              message: 'Please use the correct format: -affixes REGION'
+            })
+          }
+        })
+        break;
+      case 'm+score':
+        xternal.mPlusScore(args[0], args[1], args[2]).then(scores => {
+          let message = '';
+          console.log(scores);
+
+          bot.sendMessage({
+            to: channelID,
+            message: args[2] + ' - ' + args[1] + ' M+ score:' + '\nOveral: ' + scores.all + '\nDps: ' + scores.dps + '\nHealer: ' + scores.healer + '\nTank: ' + scores.tank
+          })
+        }).catch(err => {
+          if (err) {
+            bot.sendMessage({
+              to: channelID,
+              message: 'Please use the correct format: -m+score REGION SERVER CHARACTER'
             })
           }
 
